@@ -1,0 +1,24 @@
+---
+- name: "Make dir /home/{{ user_name }}/.ssh"
+  file:
+    path: "/home/{{ user_name }}/.ssh"
+    state: directory
+    mode: "0755"
+- name: "generate SSH key {{ssh_key_filename}}"
+  openssh_keypair:
+    path: "/home/{{ user_name }}/.ssh/{{ssh_key_filename}}"
+    type: rsa
+    size: 4096
+    state: present
+    force: yes
+- name: Add Authorized keys
+  copy:
+    src: "/home/{{ user_name }}/.ssh/{{ssh_key_filename}}.pub"
+    dest: "/home/{{ user_name }}/.ssh/authorized_keys"
+    remote_src: yes
+    force: yes
+- name: Get private key from server
+  fetch:
+    src: "/home/{{ user_name }}/.ssh/{{ssh_key_filename}}"
+    dest: "."
+    force: yes

@@ -1,0 +1,8 @@
+- name: Install zsh
+  hosts: all
+  gather_facts: yes
+  become: yes
+
+  roles:
+    - role: zsh
+      tags: install

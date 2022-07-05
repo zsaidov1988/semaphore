@@ -1,0 +1,20 @@
+---
+- name: "Make dir /home/{{ user_name }}/.ssh"
+  file:
+    path: "/home/{{ user_name }}/.ssh"
+    state: directory
+    mode: "0755"
+
+- name: Copy public ssh key to server temp file
+  copy:
+    src: "{{local_ssh_key_file_path}}"
+    dest: "/home/{{user_name}}/temp"
+    force: yes
+
+- name: Append to authorized keys
+  shell: "echo '' >> /home/{{user_name}}/.ssh/authorized_keys && cat /home/{{user_name}}/temp >> /home/{{user_name}}/.ssh/authorized_keys"
+
+- name: Delete temp file
+  file:
+    path: "/home/{{user_name}}/temp"
+    state: absent

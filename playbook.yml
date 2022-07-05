@@ -1,0 +1,16 @@
+---
+- name: Configure new server
+  hosts: all
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - ./variables/user.vars.yml
+  roles:
+    # - user
+    # - ssh-pem
+    # - ssh
+    # - common
+    # - gantsign.oh-my-zsh
+    # - docker
+    - nginx-add-domen
+    # - postgres

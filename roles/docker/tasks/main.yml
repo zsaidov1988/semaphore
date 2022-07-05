@@ -1,0 +1,70 @@
+---
+# - name: "apt-get update"
+#   apt:
+#     update_cache: yes
+#     cache_valid_time: 3600
+
+# - name: Add Docker GPG apt Key
+#   apt_key:
+#     url: https://download.docker.com/linux/ubuntu/gpg
+#     state: present
+
+# - name: Add Docker Repository
+#   apt_repository:
+#     repo: deb https://download.docker.com/linux/ubuntu focal stable
+#     state: present
+
+# - name: Update apt and install docker-ce
+#   apt:
+#     name: docker-ce
+#     state: latest
+#     update_cache: true
+
+# - name: Add user to docker group
+#   user:
+#     name: "{{user_name}}"
+#     group: docker
+
+- name: Add Docker s official GPG key
+  remote_user: "{{user_name}}"
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Verify that we have the key with the fingerprint
+  remote_user: "{{user_name}}"
+  apt_key:
+    id: 0EBFCD88
+    state: present
+
+- name: Set up the stable repository
+  remote_user: "{{user_name}}"
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+    state: present
+    update_cache: yes
+
+- name: Update apt packages
+  remote_user: "{{user_name}}"
+  apt:
+    update_cache: yes
+
+- name: Install docker
+  remote_user: "{{user_name}}"
+  apt:
+    name: docker-ce
+    state: present
+    update_cache: yes
+
+- name: "Add remote {{user_name}} user to docker group"
+  user:
+    name: "{{user_name}}"
+    groups: "docker"
+    append: yes
+
+- name: Install docker-compose
+  remote_user: "{{user_name}}"
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: "u+x,g+x"
