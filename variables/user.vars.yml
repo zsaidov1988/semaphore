@@ -12,16 +12,33 @@ ssh_key_filename: id_rsa
 zsh_theme: robbyrussell
 # zsh_theme: powerlevel10k/powerlevel10k
 
+certbot_certificate_presence: yes
 nginx_domains:
-  - domain: zafar.uz
+  - domain: test.nossl1.zafardevops.uz
     port: 7777
-    upstream: zafar.uz
-    client_max_body_size: 100M
-  - domain: odil.uz
+    upstream: test.nossl1.zafardevops.uz
+    client_max_body_size: 1M
+    https: no
+  - domain: test.nossl2.zafardevops.uz
+    port: 5555
+    upstream: test.nossl2.zafardevops.uz
+    client_max_body_size: 10M
+    https: no
+  - domain: test.ssl1.zafardevops.uz
+    port: 4444
+    upstream: test.ssl1.zafardevops.uz
+    client_max_body_size: 70M
+    https: yes
+  - domain: test.ssl2.zafardevops.uz
     port: 8888
-    upstream: odil.uz
-    client_max_body_size: 50M
-  - domain: nabi.uz
-    port: 9999
-    upstream: nabi.uz
-    client_max_body_size: 80M
+    upstream: test.ssl2.zafardevops.uz
+    client_max_body_size: 30M
+    https: yes
+
+certbot_certs:
+  - domains:
+      - test.zafardevops.uz
+  - domains:
+      - test.ssl1.zafardevops.uz
+  - domains:
+      - test.ssl2.zafardevops.uz

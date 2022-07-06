@@ -1,8 +1,0 @@
-- name: Install postgres
-  hosts: all
-  gather_facts: yes
-  become: yes
-
-  roles:
-    - role: postgres
-      tags: install
