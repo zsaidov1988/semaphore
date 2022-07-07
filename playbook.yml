@@ -1,18 +1,19 @@
 ---
 - name: Configure new server
-  hosts: all
+  hosts: tennis
   gather_facts: yes
   become: yes
   vars_files:
     - ./variables/user.vars.yml
     - ./variables/certbot.vars.yml
+    - ./variables/zsh.vars.yml
   roles:
     # - user
     # - ssh-pem
     # - ssh
-    # - common
-    # - gantsign.oh-my-zsh
-    # - docker
+    - common
+    - zsh
+    - docker
     # - nginx-add-domen
     # - certbot
-    - postgresql
+    # - postgresql
