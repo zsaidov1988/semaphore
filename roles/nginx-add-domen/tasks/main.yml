@@ -9,24 +9,23 @@
     path: /etc/nginx/sites-enabled/default
     state: absent
 
-# - name: copy nginx nginx.conf without ssl
-#   template:
-#     src: nginx.conf.j2
-#     dest: /etc/nginx/sites-available/{{ item.domain }}
-#     owner: root
-#     group: root
-#     mode: "0644"
-#   when: item.https == no
-#   loop: "{{ nginx_domains }}"
-
-- name: copy nginx nginx.conf with ssl
+- name: copy nginx nginx.conf without ssl
   template:
-    src: nginx-ssl.conf.j2
+    src: nginx.conf.j2
     dest: /etc/nginx/sites-available/{{ item.domain }}
     owner: root
     group: root
     mode: "0644"
   loop: "{{ nginx_domains }}"
+
+# - name: copy nginx nginx.conf with ssl
+#   template:
+#     src: nginx-ssl.conf.j2
+#     dest: /etc/nginx/sites-available/{{ item.domain }}
+#     owner: root
+#     group: root
+#     mode: "0644"
+#   loop: "{{ nginx_domains }}"
 
 - name: Create a symbolic link
   file:
@@ -39,4 +38,3 @@
   service:
     name: nginx
     state: restarted
-  when: not certbot_certificate_presence

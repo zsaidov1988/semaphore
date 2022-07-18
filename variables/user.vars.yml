@@ -14,35 +14,21 @@ zsh_theme: robbyrussell
 
 certbot_certificate_presence: yes
 nginx_domains:
-  - domain: test.nossl1.zafardevops.uz
-    port: 7777
-    upstream: test.nossl1.zafardevops.uz
+  - domain: tennis.udevs.io
+    port: 8081
+    upstream: tennis.udevs.io
     client_max_body_size: 1M
-    https: no
-    host: 127.0.0.1
-  - domain: test.nossl2.zafardevops.uz
-    port: 5555
-    upstream: test.nossl2.zafardevops.uz
-    client_max_body_size: 10M
-    https: no
-    host: 127.0.0.1
-  - domain: test.ssl1.zafardevops.uz
-    port: 4444
-    upstream: test.ssl1.zafardevops.uz
-    client_max_body_size: 70M
     https: yes
     host: 127.0.0.1
-  - domain: test.ssl2.zafardevops.uz
-    port: 8888
-    upstream: test.ssl2.zafardevops.uz
-    client_max_body_size: 30M
+  - domain: admin.tennis.udevs.io
+    port: 8082
+    upstream: admin.tennis.udevs.io
+    client_max_body_size: 10M
     https: yes
     host: 127.0.0.1
 
 certbot_certs:
   - domains:
-      - test.zafardevops.uz
+      - tennis.udevs.io
   - domains:
-      - test.ssl1.zafardevops.uz
-  - domains:
-      - test.ssl2.zafardevops.uz
+      - admin.tennis.udevs.io

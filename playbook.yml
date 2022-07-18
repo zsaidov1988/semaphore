@@ -1,6 +1,6 @@
 ---
 - name: Configure new server
-  hosts: tennis
+  hosts: tennis-hetz
   gather_facts: yes
   become: yes
   vars_files:
@@ -11,9 +11,11 @@
     # - user
     # - ssh-pem
     # - ssh
-    - common
-    - zsh
-    - docker
-    # - nginx-add-domen
-    # - certbot
+    # - common
+    # - zsh
+    # - docker
+    # - nginx
+    - nginx-add-domen
+    - certbot
+    - nginx-redirect
     # - postgresql

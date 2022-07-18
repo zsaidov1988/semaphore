@@ -1,0 +1,20 @@
+---
+- name: delete default nginx site
+  file:
+    path: /etc/nginx/sites-available/{{ item.domain }}
+    state: absent
+  loop: "{{ nginx_domains }}"
+
+- name: copy nginx nginx.conf with ssl
+  template:
+    src: nginx-ssl.conf.j2
+    dest: /etc/nginx/sites-available/{{ item.domain }}
+    owner: root
+    group: root
+    mode: "0644"
+  loop: "{{ nginx_domains }}"
+
+- name: Restart nginx
+  service:
+    name: nginx
+    state: restarted
