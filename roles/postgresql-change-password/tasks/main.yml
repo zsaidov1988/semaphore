@@ -1,0 +1,12 @@
+---
+- name: Set password to user postgres
+  become: yes
+  become_method: sudo
+  become_user: postgres
+  postgresql_query:
+    port: "{{ postgres_port }}"
+    login_password: "{{ postgres_password_current }}"
+    db: postgres
+    query: "ALTER USER postgres WITH PASSWORD '{{ postgres_password_new }}';"
+  when: postgres_password_change
+  notify: Restart Postgresql

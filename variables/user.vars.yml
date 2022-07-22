@@ -1,6 +1,6 @@
 ---
 user_name: ubuntu
-user_password: hello
+user_password: Gh56Fhjk9HgdjHD
 user_primary_group: ubuntu
 is_user_sudoer: yes
 # shu file ni serverdagi  authorized_keys ga qo'shadi
@@ -14,21 +14,13 @@ zsh_theme: robbyrussell
 
 certbot_certificate_presence: yes
 nginx_domains:
-  - domain: tennis.udevs.io
-    port: 8081
-    upstream: tennis.udevs.io
-    client_max_body_size: 1M
-    https: yes
-    host: 127.0.0.1
-  - domain: admin.tennis.udevs.io
+  - domain: test.ssl1.zafardevops.uz
     port: 8082
-    upstream: admin.tennis.udevs.io
-    client_max_body_size: 10M
-    https: yes
+    upstream: test.ssl1.zafardevops.uz
+    client_max_body_size: 100M
     host: 127.0.0.1
-
-certbot_certs:
-  - domains:
-      - tennis.udevs.io
-  - domains:
-      - admin.tennis.udevs.io
+  - domain: test.ssl2.zafardevops.uz
+    port: 9000
+    upstream: test.ssl2.zafardevops.uz
+    client_max_body_size: 100M
+    host: 127.0.0.1

@@ -18,15 +18,6 @@
     mode: "0644"
   loop: "{{ nginx_domains }}"
 
-# - name: copy nginx nginx.conf with ssl
-#   template:
-#     src: nginx-ssl.conf.j2
-#     dest: /etc/nginx/sites-available/{{ item.domain }}
-#     owner: root
-#     group: root
-#     mode: "0644"
-#   loop: "{{ nginx_domains }}"
-
 - name: Create a symbolic link
   file:
     src: /etc/nginx/sites-available/{{ item.domain }}

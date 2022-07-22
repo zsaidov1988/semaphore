@@ -1,12 +1,13 @@
 ---
 - name: Configure new server
-  hosts: tennis-hetz
+  hosts: web
   gather_facts: yes
   become: yes
   vars_files:
     - ./variables/user.vars.yml
     - ./variables/certbot.vars.yml
     - ./variables/zsh.vars.yml
+    - ./variables/postgres.vars.yml
   roles:
     # - user
     # - ssh-pem
@@ -15,7 +16,7 @@
     # - zsh
     # - docker
     # - nginx
-    - nginx-add-domen
-    - certbot
-    - nginx-redirect
-    # - postgresql
+    # - nginx-add-domen
+    # - certbot
+    # - nginx-redirect
+    - postgresql
