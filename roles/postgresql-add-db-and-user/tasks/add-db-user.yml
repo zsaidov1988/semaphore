@@ -1,0 +1,39 @@
+---
+- name: "Create a new database with name {{ item.db_name }}"
+  postgresql_db:
+    name: "{{ item.db_name }}"
+    port: "{{ postgres_port }}"
+    login_user: postgres
+    login_password: "{{ postgres_password_new }}"
+- name: "Connect to {{ item.db_name }} database, create {{ item.user_name }} user, and grant SUPERUSER"
+  postgresql_user:
+    db: "{{ item.db_name }}"
+    name: "{{ item.user_name }}"
+    password: "{{ item.user_password }}"
+    priv: "ALL/ALL"
+    role_attr_flags: SUPERUSER
+    port: "{{ postgres_port }}"
+    login_user: postgres
+    login_password: "{{ postgres_password_new }}"
+  when: item.super_user
+- name: "Connect to {{ item.db_name }} database, create {{ item.user_name }} user, and grant access"
+  postgresql_user:
+    db: "{{ item.db_name }}"
+    name: "{{ item.user_name }}"
+    password: "{{ item.user_password }}"
+    priv: "ALL/ALL"
+    port: "{{ postgres_port }}"
+    login_user: postgres
+    login_password: "{{ postgres_password_new }}"
+  when: not item.super_user
+# - name: "Grant privs to {{ item.user_name }} on database {{ item.db_name }}"
+#   postgresql_privs:
+#     database: "{{ item.db_name }}"
+#     state: present
+#     port: "{{ postgres_port }}"
+#     privs: ALL
+#     type: database
+#     objs: ALL_IN_SCHEMA
+#     schema: public
+#     login_user: postgres
+#     login_password: "{{ postgres_password_new }}"

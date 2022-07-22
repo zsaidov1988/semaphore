@@ -1,5 +1,5 @@
 ---
-- name: Set password to user postgres
+- name: Change password of user postgres
   become: yes
   become_method: sudo
   become_user: postgres

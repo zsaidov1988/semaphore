@@ -4,3 +4,14 @@ postgres_password_old: ""
 postgres_password_new: admin
 postgres_timezone: Asia/Tashkent
 postgres_port: 30032
+
+# Variables for adding new users and databases
+databases:
+  - user_name: service
+    db_name: service
+    user_password: pass
+    super_user: yes
+  - user_name: service2
+    db_name: service2
+    user_password: pass2
+    super_user: no

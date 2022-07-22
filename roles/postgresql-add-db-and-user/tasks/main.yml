@@ -1,1 +1,4 @@
 ---
+- name: Add user and database
+  include_tasks: add-db-user.yml
+  loop: "{{ databases }}"

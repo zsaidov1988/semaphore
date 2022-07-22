@@ -19,4 +19,6 @@
     # - nginx-add-domen
     # - certbot
     # - nginx-redirect
-    - postgresql
+    # - postgresql
+    # - postgresql-change-password
+    - postgresql-add-db-and-user
