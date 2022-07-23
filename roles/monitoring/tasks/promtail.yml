@@ -1,0 +1,31 @@
+---
+- name: Send template file
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - src: files/docker-config.yml
+      dest: /tmp/docker-config.yml
+
+- name: Line in file
+  lineinfile:
+    path: /tmp/docker-config.yml
+    regexp: "^  - url: {{ loki_path }}"
+    line: "  - url: {{ loki_path }}"
+
+- name: Promtail docker compose
+  docker_stack:
+    state: present
+    name: "{{ stack_name }}"
+    compose:
+      - version: "3.7"
+        services:
+          promtail:
+            image: "grafana/promtail:{{ promtail_version}}"
+            volumes:
+              - /var/lib/docker/containers:/var/lib/docker/containers
+              - /tmp/docker-config.yml:/etc/promtail/docker-config.yml
+            command: -config.file=/etc/promtail/docker-config.yml

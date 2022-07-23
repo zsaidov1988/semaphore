@@ -1,0 +1,26 @@
+---
+- name: Send template file
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - src: templates/local-config.yml.j2
+      dest: /tmp/local-config.yml
+
+- name: Loki docker compose
+  docker_stack:
+    state: present
+    name: "{{ stack_name }}"
+    compose:
+      - version: "3.7"
+        services:
+          loki:
+            image: "grafana/loki:{{ loki_version }}"
+            volumes:
+              - /tmp/local-config.yml:/etc/loki/local-config.yml
+            ports:
+              - "{{ loki_external_port }}:3100"
+            command: -config.file=/etc/loki/local-config.yml

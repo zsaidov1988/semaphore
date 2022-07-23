@@ -1,0 +1,111 @@
+groups:
+  - name: node
+    rules:
+      - alert: HostOutOfDiskSpace
+        expr: (100 - (100 * node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"})) > 90
+        for: 5m
+        labels:
+          severity: warning
+          instance: "{{ $labels.instance }}"
+        annotations:
+          summary: "Host out of disk space (instance {{ $labels.instance }})"
+          message: "Disk is almost full (< 10% left)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      - alert: HostHighCpuLoad
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 1m
+        labels:
+          severity: warning
+          instance: "{{ $labels.instance }}"
+        annotations:
+          summary: "Host high CPU load (instance {{ $labels.instance }})"
+          message: "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+      - alert: Node down
+        expr: up{job="node_exporter"} == 0
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          title: Node {{ $labels.instance }} is down
+          description: Failed to scrape {{ $labels.job }} on {{ $labels.instance }} for more than 3 minutes. Node seems down.
+          message: "One of host is down that's is LABELS: {{ $labels }}"
+      - alert: PrometheusAlertmanagerNotificationFailing
+        expr: rate(alertmanager_notifications_failed_total[1m]) > 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Prometheus AlertManager notification failing (instance {{ $labels.instance }})"
+          description: "Alertmanager is failing sending notifications\n VALUE = {{ $value }}\n LABELS: {{ $labels }}"
+          message: "Alertmanager can not get notifications from  LABELS: {{ $labels }}"
+
+      - alert: NotDeliveredSmsStatus
+        expr: sum(http_sms_statuses) > 10000000
+        for: 100m
+        labels:
+          severity: critical
+          instance: "{{ $labels.instance }}"
+        annotations:
+          summary: Application receiving too many requests
+          description: "SMS.Uz failing sending messages \n Instance: {{ $labels.instance }}"
+          message: "TEST Not delivered messages values are more than 35000 \nCurrent messages with OTHER status - : {{ $value }}"
+
+      - alert: HostOutOfMemory
+        expr: node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: Host out of memory (instance {{ $labels.instance }})
+          message: "Node memory is filling up (< 10% left)\n VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+#  - alert: HostIsDown
+#expr: up == 0
+#for: 30s
+#labels:
+#severity: critical
+#   annotations:
+#     summary: "Monitor service non-operational"
+#     description: "Service {{ $labels.instance }} is down."
+#     message: "Service  VALUE = {{ $value }}\n  LABELS: {{ $labels }} is down"
+#  - alert: BlackboxSslCertificateWillExpireSoon
+#    expr: probe_ssl_earliest_cert_expiry - time() < 86400 * 50
+#    for: 0m
+#    labels:
+#      severity: warning
+#    annotations:
+#      summary: Blackbox SSL certificate will expire soon (instance {{ $labels.instance }})
+#      description: SSL certificate expires in 50 days\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}
+
+#  - alert: NginxHighHttp4xxErrorRate
+#    expr: sum(rate(nginx_http_requests_total{status=~"^4.."}[1m])) / sum(rate(nginx_http_requests_total[1m])) * 100 > 1
+#    for: 1m
+#    labels:
+#      severity: critical
+#    annotations:
+#      summary: Nginx high HTTP 4xx error rate (instance {{ $labels.instance }})
+#      description: Too many HTTP requests with status 4xx (> 5%)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}
+
+#  - alert: NginxHighHttp5xxErrorRate
+#    expr: sum(rate(nginx_http_requests_total{status=~"^5.."}[1m])) / sum(rate(nginx_http_requests_total[1m])) * 100 > 1
+#    for: 1m
+#    labels:
+#      severity: critical
+#    annotations:
+#      summary: Nginx high HTTP 5xx error rate (instance {{ $labels.instance }})
+#      description: Too many HTTP requests with status 5xx (> 5%)\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}
+
+#   - alert: KubernetesMemoryPressure
+#    expr: kube_node_status_condition{condition="MemoryPressure",status="true"} == 1
+#    for: 2m
+#    labels:
+#      severity: critical
+#    annotations:
+#      summary: Kubernetes memory pressure (instance {{ $labels.instance }})
+#      description: {{ $labels.node }} has MemoryPressure condition\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}
+#   - alert: KubernetesOutOfDisk
+#    expr: kube_node_status_condition{condition="OutOfDisk",status="true"} == 1
+#    for: 2m
+#    labels:
+#      severity: critical
+#    annotations:
+#      summary: Kubernetes out of disk (instance {{ $labels.instance }})
+#      description: {{ $labels.node }} has OutOfDisk condition\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}#

@@ -1,0 +1,24 @@
+---
+- name: Docker compose up GRAFANA
+  include_tasks: grafana.yml
+  when: is_need_grafana
+
+- name: Docker compose up PROMETHEUS
+  include_tasks: prometheus.yml
+  when: is_need_prometheus
+
+- name: Docker compose up LOKI
+  include_tasks: loki.yml
+  when: is_need_loki
+
+- name: Docker compose up PROMTAIL
+  include_tasks: promtail.yml
+  when: is_need_promtail
+
+- name: Docker compose up NODE-EXPORTER
+  include_tasks: node-exporter.yml
+  when: is_need_node_exporter
+
+- name: Docker compose up POSTGRES-EXPORTER
+  include_tasks: postgres-exporter.yml
+  when: is_need_postgres_exporter

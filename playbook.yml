@@ -1,13 +1,14 @@
 ---
 - name: Configure new server
   hosts: web
-  gather_facts: yes
+  gather_facts: no
   become: yes
   vars_files:
     - ./variables/user.vars.yml
     - ./variables/certbot.vars.yml
     - ./variables/zsh.vars.yml
     - ./variables/postgres.vars.yml
+    - ./variables/monitoring.vars.yml
   roles:
     # - user
     # - ssh-pem
@@ -21,4 +22,5 @@
     # - nginx-redirect
     # - postgresql
     # - postgresql-change-password
-    - postgresql-add-db-and-user
+    # - postgresql-add-db-and-user
+    - monitoring

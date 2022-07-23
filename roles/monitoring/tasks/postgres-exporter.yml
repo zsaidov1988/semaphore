@@ -1,0 +1,15 @@
+---
+- name: Postgres-exporter docker compose
+  docker_stack:
+    state: present
+    name: "{{ stack_name }}"
+    compose:
+      - version: "3.7"
+        services:
+          postgres-exporter:
+            image: prometheuscommunity/postgres-exporter:{{ postgres_exporter_version }}
+            restart: always
+            environment:
+              - DATA_SOURCE_NAME=postgresql://{{ postgres_exporter_user }}:{{ postgres_exporter_password }}@{{ postgres_exporter_host }}:{{ postgres_exporter_port }}/postgres
+            ports:
+              - "{{ postgres_exporter_external_port }}:9187"

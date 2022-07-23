@@ -1,0 +1,44 @@
+---
+- name: Send template file
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - src: files/alert_rules.yml
+      dest: /tmp/alert_rules.yml
+    - src: files/elasticsearch_rules.yml
+      dest: /tmp/elasticsearch_rules.yml
+
+- name: Send template file
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - src: templates/prometheus.yml.j2
+      dest: /tmp/prometheus.yml
+
+- name: Prometheus docker compose
+  docker_stack:
+    state: present
+    name: "{{ stack_name }}"
+    compose:
+      - version: "3.7"
+        services:
+          prometheus:
+            restart: on-failure
+            image: "prom/prometheus:{{ prometheus_version }}"
+            ports:
+              - "{{ prometheus_external_port }}:9090"
+            volumes:
+              - /tmp/alert_rules.yml:/etc/prometheus/alert_rules.yml
+              - /tmp/elasticsearch_rules.yml:/etc/prometheus/elasticsearch.rules
+              - /tmp/prometheus.yml:/etc/prometheus/prometheus.yml
+              - prometheus:/prometheus
+        volumes:
+          prometheus:
