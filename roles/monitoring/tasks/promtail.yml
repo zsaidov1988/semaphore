@@ -1,5 +1,5 @@
 ---
-- name: Send template file
+- name: Promtail | Send template file
   copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -10,13 +10,15 @@
     - src: files/docker-config.yml
       dest: /tmp/docker-config.yml
 
-- name: Line in file
-  lineinfile:
-    path: /tmp/docker-config.yml
-    regexp: "^  - url: {{ loki_path }}"
-    line: "  - url: {{ loki_path }}"
+- name: Promtail | add loki url to file
+  blockinfile:
+    dest: /tmp/docker-config.yml
+    block: |
+      clients:
+        - url: {{ loki_path }}
+    backup: yes
 
-- name: Promtail docker compose
+- name: Promtail | Docker compose up
   docker_stack:
     state: present
     name: "{{ stack_name }}"

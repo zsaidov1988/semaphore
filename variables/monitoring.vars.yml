@@ -8,7 +8,8 @@ is_need_mongodb_exporter: no
 is_need_redis_exporter: no
 
 # Stack configs
-stack_name: mystack
+get_stack_name_from_server: no
+stack_name: test_stack
 
 # Grafana configs
 grafana_version: "8.3.3"
@@ -18,6 +19,18 @@ grafana_external_port: 3000
 #Prometheus configs
 prometheus_version: "v2.33.5"
 prometheus_external_port: 9090
+prometheus_exporter_monitoring_group: "paynet_monitoring"
+prometheus_exporters:
+  - jobname: node
+    exporter:
+      - targets: "node-exporter:9100" # ne-paynet.udevs.io:80
+      - targets: "test.ne-paynet.udevs.io:80"
+      - targets: "ne-paynet.udevs.io:80"
+  - jobname: postgres
+    exporter:
+      - targets: "postgres-exporter:9187" # pe-paynet.udevs.io:80
+      - targets: "test.pe-paynet.udevs.io:80"
+      - targets: "pe-paynet.udevs.io:80"
 
 #Loki configs
 loki_version: "1.4.1"

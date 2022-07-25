@@ -1,4 +1,8 @@
 ---
+- name: Get stack name
+  include_tasks: get-stack-name.yml
+  when: get_stack_name_from_server
+
 - name: Docker compose up GRAFANA
   include_tasks: grafana.yml
   when: is_need_grafana

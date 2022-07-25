@@ -1,5 +1,5 @@
 ---
-- name: Grafana docker compose
+- name: Grafana | Docker compose up
   docker_stack:
     state: present
     name: "{{ stack_name }}"

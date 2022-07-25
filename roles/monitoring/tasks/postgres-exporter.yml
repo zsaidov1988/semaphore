@@ -1,5 +1,5 @@
 ---
-- name: Postgres-exporter docker compose
+- name: Postgres-exporter | Docker compose up
   docker_stack:
     state: present
     name: "{{ stack_name }}"

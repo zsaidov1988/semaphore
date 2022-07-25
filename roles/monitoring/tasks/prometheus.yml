@@ -1,5 +1,5 @@
 ---
-- name: Send template file
+- name: Prometheus | Send config files
   copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -12,7 +12,7 @@
     - src: files/elasticsearch_rules.yml
       dest: /tmp/elasticsearch_rules.yml
 
-- name: Send template file
+- name: Prometheus | Send template files
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -23,7 +23,7 @@
     - src: templates/prometheus.yml.j2
       dest: /tmp/prometheus.yml
 
-- name: Prometheus docker compose
+- name: Prometheus | Docker compose up
   docker_stack:
     state: present
     name: "{{ stack_name }}"

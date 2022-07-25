@@ -1,0 +1,8 @@
+---
+- name: Get stack name
+  shell: "docker stack ls | awk '{print $1}' | sed '1d'"
+  register: output
+
+- name: Assign stack name to variable
+  set_fact:
+    stack_name: "{{ output.stdout }}"

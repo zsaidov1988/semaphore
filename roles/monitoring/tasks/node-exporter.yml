@@ -1,5 +1,5 @@
 ---
-- name: Node exporter docker compose
+- name: Node exporter | Docker compose up
   docker_stack:
     state: present
     name: "{{ stack_name }}"

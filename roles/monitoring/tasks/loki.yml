@@ -1,5 +1,5 @@
 ---
-- name: Send template file
+- name: Loki | Send template file
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -10,7 +10,7 @@
     - src: templates/local-config.yml.j2
       dest: /tmp/local-config.yml
 
-- name: Loki docker compose
+- name: Loki | Docker compose up
   docker_stack:
     state: present
     name: "{{ stack_name }}"

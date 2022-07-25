@@ -21,7 +21,7 @@ groups:
         annotations:
           description: 'Instance {{ $labels.instance }}: not all primary and replica shards
         are allocated in elasticsearch cluster {{ $labels.cluster }}.'
-          summary: 'Instance {{ $labels.instance }}: not all primary and replica shards
+          summary: 'Instance {{ \$labels.instance }}: not all primary and replica shards
         are allocated in elasticsearch cluster {{ $labels.cluster }}'
       - alert: Elastic_Cluster_Health_Yellow
         expr: elasticsearch_cluster_health_status{color="yellow"} == 1
