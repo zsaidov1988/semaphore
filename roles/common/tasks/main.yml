@@ -17,5 +17,13 @@
       - python3-setuptools
       - git
       - net-tools
+      - htop
     state: latest
     update_cache: true
+
+- name: Install pip packages
+  pip:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - jsondiff

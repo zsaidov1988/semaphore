@@ -1,0 +1,10 @@
+---
+- name: Create prometheus datasource
+  community.grafana.grafana_datasource:
+    name: "{{ item.name }}"
+    ds_type: prometheus
+    ds_url: "{{ item.url }}"
+    is_default: yes
+    state: present
+    url: "http://{{ ansible_host }}:{{ grafana_external_port }}"
+    grafana_password: "{{ grafana_admin_password }}"

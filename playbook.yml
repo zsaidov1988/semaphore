@@ -1,26 +1,99 @@
 ---
 - name: Configure new server
-  hosts: web
-  gather_facts: no
+  hosts: "{{ hostname }}"
+  gather_facts: yes
   become: yes
   vars_files:
-    - ./variables/user.vars.yml
-    - ./variables/certbot.vars.yml
-    - ./variables/zsh.vars.yml
-    - ./variables/postgres.vars.yml
-    - ./variables/monitoring.vars.yml
-  roles:
-    # - user
-    # - ssh-pem
-    # - ssh
-    # - common
-    # - zsh
-    # - docker
-    # - nginx
-    # - nginx-add-domen
-    # - certbot
-    # - nginx-redirect
-    # - postgresql
-    # - postgresql-change-password
-    # - postgresql-add-db-and-user
-    - monitoring
+    - "./inventory/host_vars/{{ hostname }}/roles.vars.yml"
+    - "./inventory/host_vars/{{ hostname }}/user.vars.yml"
+    - "./inventory/host_vars/{{ hostname }}/zsh.vars.yml"
+    - "./inventory/host_vars/{{ hostname }}/network.vars.yml"
+    - "./inventory/host_vars/{{ hostname }}/postgres.vars.yml"
+    - "./inventory/host_vars/{{ hostname }}/monitoring.vars.yml"
+    - "./inventory/host_vars/{{ hostname }}/certbot.vars.yml"
+  tasks:
+    - name: "Include role | {{ roles.user.name }}"
+      include_role:
+        name: "{{ roles.user.name }}"
+      tags: "{{ roles.user.tags }}"
+      when: roles.user.include
+    - name: "Include role | {{ roles.ssh_pem.name }}"
+      include_role:
+        name: "{{ roles.ssh_pem.name }}"
+      tags: "{{ roles.ssh_pem.tags }}"
+      when: roles.ssh_pem.include
+    - name: "Include role | {{ roles.ssh.name }}"
+      include_role:
+        name: "{{ roles.ssh.name }}"
+      tags: "{{ roles.ssh.tags }}"
+      when: roles.ssh.include
+    - name: "Include role | {{ roles.common.name }}"
+      include_role:
+        name: "{{ roles.common.name }}"
+      tags: "{{ roles.common.tags }}"
+      when: roles.common.include
+    - name: "Include role | {{ roles.zsh.name }}"
+      include_role:
+        name: "{{ roles.zsh.name }}"
+      tags: "{{ roles.zsh.tags }}"
+      when: roles.zsh.include
+    - name: "Include role | {{ roles.docker.name }}"
+      include_role:
+        name: "{{ roles.docker.name }}"
+      tags: "{{ roles.docker.tags }}"
+      when: roles.docker.include
+    - name: "Include role | {{ roles.nginx.name }}"
+      include_role:
+        name: "{{ roles.nginx.name }}"
+      tags: "{{ roles.nginx.tags }}"
+      when: roles.nginx.include
+    - name: "Include role | {{ roles.nginx_add_domen.name }}"
+      include_role:
+        name: "{{ roles.nginx_add_domen.name }}"
+      tags: "{{ roles.nginx_add_domen.tags }}"
+      when: roles.nginx_add_domen.include
+    - name: "Include role | {{ roles.certbot.name }}"
+      include_role:
+        name: "{{ roles.certbot.name }}"
+      tags: "{{ roles.certbot.tags }}"
+      when: roles.certbot.include
+    - name: "Include role | {{ roles.postgresql.name }}"
+      include_role:
+        name: "{{ roles.postgresql.name }}"
+      tags: "{{ roles.postgresql.tags }}"
+      when: roles.postgresql.include
+    - name: "Include role | {{ roles.postgresql_change_password.name }}"
+      include_role:
+        name: "{{ roles.postgresql_change_password.name }}"
+      tags: "{{ roles.postgresql_change_password.tags }}"
+      when: roles.postgresql_change_password.include
+    - name: "Include role | {{ roles.postgresql_add_db_and_user.name }}"
+      include_role:
+        name: "{{ roles.postgresql_add_db_and_user.name }}"
+      tags: "{{ roles.postgresql_add_db_and_user.tags }}"
+      when: roles.postgresql_add_db_and_user.include
+    - name: "Include role | {{ roles.monitoring.name }}"
+      include_role:
+        name: "{{ roles.monitoring.name }}"
+      tags: "{{ roles.monitoring.tags }}"
+      when: roles.monitoring.include
+    - name: "Include role | {{ roles.grafana_config.name }}"
+      include_role:
+        name: "{{ roles.grafana_config.name }}"
+      tags: "{{ roles.grafana_config.tags }}"
+      when: roles.grafana_config.include
+
+  # - user
+  # - ssh-pem
+  # - ssh
+  # - common
+  # - zsh
+  # - docker
+  # - nginx
+  # - nginx-add-domen
+  # - certbot
+  # - postgresql
+  # - postgresql-change-password
+  # - postgresql-add-db-and-user
+  # - monitoring
+  # - grafana-config

@@ -1,8 +1,0 @@
-- name: Add domain to nginx
-  hosts: all
-  gather_facts: yes
-  become: yes
-
-  roles:
-    - role: nginx-add-domen
-      tags: add

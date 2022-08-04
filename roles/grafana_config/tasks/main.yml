@@ -1,0 +1,20 @@
+---
+- name: Add Datasource | PROMETHEUS
+  include_tasks: prometheus-ds.yml
+  with_items: "{{ prometheus_datasources }}"
+
+- name: Add Datasource | LOKI
+  include_tasks: loki-ds.yml
+  with_items: "{{ loki_datasources }}"
+
+- name: Add Dashboard | NODE_EXPORTER
+  include_tasks: dashboard-ne.yml
+  when: dashboards.node_exporter
+
+- name: Add Dashboard | POSTGRES_EXPORTER
+  include_tasks: dashboard-pe.yml
+  when: dashboards.postgres_exporter
+
+- name: Add Dashboard | CADVISOR_EXPORTER
+  include_tasks: dashboard-cadvisor.yml
+  when: dashboards.cadvisor_exporter

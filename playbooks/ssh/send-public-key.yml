@@ -1,8 +1,0 @@
-- name: Add public key to authorized keys
-  hosts: all
-  gather_facts: yes
-  become: yes
-
-  roles:
-    - role: ssh
-      tags: send

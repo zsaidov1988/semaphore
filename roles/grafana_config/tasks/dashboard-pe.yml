@@ -1,0 +1,21 @@
+---
+- name: Dashboard - Postgresql Database | Send config files
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - src: files/postgresql-database.json
+      dest: /tmp/postgresql-database.json
+
+- name: Import Grafana dashboard - Postgresql Database
+  community.grafana.grafana_dashboard:
+    # dashboard_id: 9628
+    path: /tmp/postgresql-database.json
+    overwrite: yes
+    state: present
+    url: "http://{{ ansible_host }}:{{ grafana_external_port }}"
+    grafana_password: "{{ grafana_admin_password }}"
+    grafana_user: admin

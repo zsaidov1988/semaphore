@@ -1,0 +1,21 @@
+---
+- name: Dashboard - Cadvisor exporter | Send config files
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - src: files/cadvisor-exporter.json
+      dest: /tmp/cadvisor-exporter.json
+
+- name: Import Grafana dashboard - Cadvisor exporter
+  community.grafana.grafana_dashboard:
+    # dashboard_id: 14282
+    path: /tmp/cadvisor-exporter.json
+    overwrite: yes
+    state: present
+    url: "http://{{ ansible_host }}:{{ grafana_external_port }}"
+    grafana_password: "{{ grafana_admin_password }}"
+    grafana_user: admin

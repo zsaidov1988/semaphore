@@ -18,3 +18,12 @@ scrape_configs:
 {% endfor %}
 {% endfor %}
 
+rule_files:
+  - ./alert_rules.yml
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ["alertmanager:{{ alertmanager_external_port }}"]
+
+

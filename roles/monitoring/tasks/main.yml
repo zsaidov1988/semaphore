@@ -11,6 +11,10 @@
   include_tasks: prometheus.yml
   when: is_need_prometheus
 
+- name: Docker compose up ALERTMANAGER
+  include_tasks: alertmanager.yml
+  when: is_need_alertmanager
+
 - name: Docker compose up LOKI
   include_tasks: loki.yml
   when: is_need_loki
@@ -26,3 +30,7 @@
 - name: Docker compose up POSTGRES-EXPORTER
   include_tasks: postgres-exporter.yml
   when: is_need_postgres_exporter
+
+- name: Docker compose up CADVISOR
+  include_tasks: cadvisor.yml
+  when: is_need_cadvisor

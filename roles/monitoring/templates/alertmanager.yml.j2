@@ -1,0 +1,22 @@
+route:
+  group_wait: 15s
+  group_interval: 15s
+  repeat_interval: 15s
+  group_by: ["alertname", "cluster", "service"]
+  receiver: "{{ receiver_name }}"
+  routes:
+    - match:
+        instance: "node-exporter:9101"
+      receiver: "{{ receiver_name }}"
+      continue: true
+receivers:
+  - name: "{{ receiver_name }}"
+    telegram_configs:
+      - send_resolved: true
+        bot_token: {{ bot_token }}
+        chat_id: {{ chat_id }}
+        api_url: https://api.telegram.org
+{% raw %}
+        message: '{{ template "telegram.default.message" .}}'
+{% endraw %}
+        parse_mode: ""

@@ -1,0 +1,10 @@
+---
+- name: Create Loki datasource
+  community.grafana.grafana_datasource:
+    name: loki
+    ds_type: loki
+    ds_url: http://loki:3100
+    state: present
+    url: "http://{{ ansible_host }}:{{ grafana_external_port }}"
+    grafana_password: "{{ grafana_admin_password }}"
+    grafana_user: admin

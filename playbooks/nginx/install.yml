@@ -1,8 +1,0 @@
-- name: Install nginx
-  hosts: all
-  gather_facts: yes
-  become: yes
-
-  roles:
-    - role: nginx
-      tags: install

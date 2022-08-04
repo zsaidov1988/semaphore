@@ -1,0 +1,21 @@
+---
+- name: Dashboard - Node Exporter Full | Send config files
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - src: files/node-exporter-full.json
+      dest: /tmp/node-exporter-full.json
+
+- name: Import Grafana dashboard - Node exporter
+  community.grafana.grafana_dashboard:
+    # dashboard_id: 1860
+    path: /tmp/node-exporter-full.json
+    overwrite: yes
+    state: present
+    url: "http://{{ ansible_host }}:{{ grafana_external_port }}"
+    grafana_password: "{{ grafana_admin_password }}"
+    grafana_user: admin
