@@ -1,0 +1,21 @@
+---
+user_name: ubuntu
+user_password: Gh56FhcbvgdjHD
+user_primary_group: ubuntu
+is_user_sudoer: yes
+# shu file ni serverdagi  authorized_keys ga qo'shadi
+local_ssh_key_file_path: /home/zafar/.ssh/id_rsa.pub
+
+# serverda shu nomli key yaratadi va pub key ni localga jo'natadi.
+ssh_key_filename: id_rsa
+
+zsh_theme: robbyrussell
+# zsh_theme: powerlevel10k/powerlevel10k
+
+certbot_certificate_presence: yes
+nginx_domains:
+  - domain: merchant.paynet.udevs.io
+    port: 8083
+    upstream: merchant.paynet.udevs.io
+    client_max_body_size: 100M
+    host: 127.0.0.1

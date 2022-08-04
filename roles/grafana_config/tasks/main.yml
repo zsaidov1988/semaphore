@@ -2,10 +2,12 @@
 - name: Add Datasource | PROMETHEUS
   include_tasks: prometheus-ds.yml
   with_items: "{{ prometheus_datasources }}"
+  when: data_sources.prometheus
 
 - name: Add Datasource | LOKI
   include_tasks: loki-ds.yml
   with_items: "{{ loki_datasources }}"
+  when: data_sources.loki
 
 - name: Add Dashboard | NODE_EXPORTER
   include_tasks: dashboard-ne.yml

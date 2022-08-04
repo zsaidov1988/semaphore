@@ -1,0 +1,86 @@
+---
+roles:
+  user:
+    name: user
+    include: no
+    tags:
+      - user
+      - configure_user
+  ssh_pem:
+    name: ssh_pem
+    include: no
+    tags:
+      - ssh_pem
+      - configure_ssh_pem
+  ssh:
+    name: ssh
+    include: no
+    tags:
+      - ssh
+      - configure_ssh
+  common:
+    name: common
+    include: no
+    tags:
+      - common
+      - configure_common
+  zsh:
+    name: zsh
+    include: no
+    tags:
+      - zsh
+      - configure_zsh
+  docker:
+    name: docker
+    include: yes
+    tags:
+      - docker
+      - configure_docker
+  nginx:
+    name: nginx
+    include: yes
+    tags:
+      - nginx
+      - configure_nginx
+  nginx_add_domen:
+    name: nginx_add_domen
+    include: no
+    tags:
+      - nginx_add_domen
+      - configure_nginx_add_domen
+  certbot:
+    name: certbot
+    include: no
+    tags:
+      - certbot
+      - configure_certbot
+  postgresql:
+    name: postgresql
+    include: yes
+    tags:
+      - postgresql
+      - configure_postgresql
+  postgresql_change_password:
+    name: postgresql_change_password
+    include: no
+    tags:
+      - postgresql_change_password
+      - configure_postgresql_change_password
+  postgresql_add_db_and_user:
+    name: postgresql_add_db_and_user
+    include: no
+    tags:
+      - postgresql_add_db_and_user
+      - configure_postgresql_add_db_and_user
+  monitoring:
+    name: monitoring
+    include: no
+    tags:
+      - monitoring
+      - configure_monitoring
+  grafana_config:
+    name: grafana_config
+    include: no
+    tags:
+      - grafana_config
+      - configure_grafana_config
