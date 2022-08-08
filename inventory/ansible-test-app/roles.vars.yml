@@ -1,86 +1,102 @@
 ---
+toggler:
+  user: no
+  ssh_pem: no
+  ssh: no
+  common: no
+  zsh: no
+  docker: no
+  nginx: no
+  nginx_add_domen: no
+  certbot: no
+  postgresql: no
+  postgresql_change_password: no
+  postgresql_add_db_and_user: no
+  monitoring: no
+  grafana_config: no
+
 roles:
   user:
     name: user
-    include: no
+    include: "{{ toggler.user }}"
     tags:
       - user
       - configure_user
   ssh_pem:
     name: ssh_pem
-    include: no
+    include: "{{ toggler.ssh_pem }}"
     tags:
       - ssh_pem
       - configure_ssh_pem
   ssh:
     name: ssh
-    include: no
+    include: "{{ toggler.ssh }}"
     tags:
       - ssh
       - configure_ssh
   common:
     name: common
-    include: no
+    include: "{{ toggler.common }}"
     tags:
       - common
       - configure_common
   zsh:
     name: zsh
-    include: no
+    include: "{{ toggler.zsh }}"
     tags:
       - zsh
       - configure_zsh
   docker:
     name: docker
-    include: yes
+    include: "{{ toggler.docker }}"
     tags:
       - docker
       - configure_docker
   nginx:
     name: nginx
-    include: yes
+    include: "{{ toggler.nginx }}"
     tags:
       - nginx
       - configure_nginx
   nginx_add_domen:
     name: nginx_add_domen
-    include: no
+    include: "{{ toggler.nginx_add_domen }}"
     tags:
       - nginx_add_domen
       - configure_nginx_add_domen
   certbot:
     name: certbot
-    include: no
+    include: "{{ toggler.certbot }}"
     tags:
       - certbot
       - configure_certbot
   postgresql:
     name: postgresql
-    include: yes
+    include: "{{ toggler.postgresql }}"
     tags:
       - postgresql
       - configure_postgresql
   postgresql_change_password:
     name: postgresql_change_password
-    include: no
+    include: "{{ toggler.postgresql_change_password }}"
     tags:
       - postgresql_change_password
       - configure_postgresql_change_password
   postgresql_add_db_and_user:
     name: postgresql_add_db_and_user
-    include: no
+    include: "{{ toggler.postgresql_add_db_and_user }}"
     tags:
       - postgresql_add_db_and_user
       - configure_postgresql_add_db_and_user
   monitoring:
     name: monitoring
-    include: no
+    include: "{{ toggler.monitoring }}"
     tags:
       - monitoring
       - configure_monitoring
   grafana_config:
     name: grafana_config
-    include: no
+    include: "{{ toggler.grafana_config }}"
     tags:
       - grafana_config
       - configure_grafana_config
