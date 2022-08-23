@@ -1,0 +1,9 @@
+---
+- name: Ckeck | Has swarm been inited?
+  shell: docker service ls
+  ignore_errors: yes
+  register: swarm_output
+
+- name: Init a new swarm with default parameters
+  shell: docker swarm init --advertise-addr {{ ansible_host }}
+  when: swarm_output.stderr is search("This node is not a swarm manager")

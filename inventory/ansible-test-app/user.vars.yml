@@ -1,6 +1,6 @@
 ---
 user_name: ubuntu
-user_password: Gh56FhcbvgdjHD
+user_password: gdhdh
 user_primary_group: ubuntu
 is_user_sudoer: yes
 # shu file ni serverdagi  authorized_keys ga qo'shadi
@@ -14,8 +14,8 @@ zsh_theme: robbyrussell
 
 certbot_certificate_presence: yes
 nginx_domains:
-  - domain: merchant.paynet.udevs.io
-    port: 8083
-    upstream: merchant.paynet.udevs.io
-    client_max_body_size: 100M
-    host: 127.0.0.1
+  # - domain: admin.ccnis.uz
+  #   port: 8085
+  #   upstream: admin.ccnis.uz
+  #   client_max_body_size: 100M
+  #   host: 127.0.0.1

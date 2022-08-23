@@ -40,5 +40,14 @@
               - /tmp/elasticsearch_rules.yml:/etc/prometheus/elasticsearch.rules
               - /tmp/prometheus.yml:/etc/prometheus/prometheus.yml
               - prometheus:/prometheus
+            # extra_hosts:
+            #   - ne.gitlab.ccnis.uz:10.100.1.246
+            #   - ne.vault.ccnis.uz:10.100.1.245
+            #   - test.ne.app.ccnis.uz:10.100.1.248
+            #   - test.ne.db.ccnis.uz:10.100.1.247
+            #   - ne.mon.ccnis.uz:10.100.1.249
+            #   - ne.nginx.ccnis.uz:10.100.1.250
+            #   - test.pe.db.ccnis.uz:10.100.1.247
+            #   - test.cadvisor.app.ccnis.uz:10.100.1.248
         volumes:
           prometheus:

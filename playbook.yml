@@ -11,7 +11,14 @@
     - "./inventory/host_vars/{{ hostname }}/postgres.vars.yml"
     - "./inventory/host_vars/{{ hostname }}/monitoring.vars.yml"
     - "./inventory/host_vars/{{ hostname }}/certbot.vars.yml"
+    - "./vars.yml"
   tasks:
+    # - name: Print all available facts
+    #   ansible.builtin.debug:
+    #     var: ansible_facts.hostname
+    # - name: swarm
+    #   include_role:
+    #     name: docker_swarm_init_check
     - name: "Include role | {{ roles.user.name }}"
       include_role:
         name: "{{ roles.user.name }}"

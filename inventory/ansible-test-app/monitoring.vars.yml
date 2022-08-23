@@ -1,28 +1,31 @@
-is_need_grafana: yes
-is_need_prometheus: yes
-is_need_alertmanager: yes
-is_need_loki: yes
-is_need_promtail: yes
+is_need_grafana: no
+is_need_prometheus: no
+is_need_alertmanager: no
+is_need_loki: no
+is_need_promtail: no
 is_need_node_exporter: yes
-is_need_postgres_exporter: yes
+is_need_postgres_exporter: no
 is_need_mongodb_exporter: no
 is_need_redis_exporter: no
-is_need_cadvisor: yes
+is_need_cadvisor: no
 
 # Stack configs
 get_stack_name_from_server: no
-stack_name: test_stack
+stack_name: qv
 
 # Grafana configs
 grafana_version: "8.3.3"
-grafana_admin_password: "admin"
+grafana_admin_password: "fdgdfg"
 grafana_external_port: 3000
 prometheus_datasources:
-  - name: Prometheus
+  - name: Prometheus-test
     url: http://prometheus:9090
 loki_datasources:
-  - name: Loki
+  - name: Loki-test
     url: http://loki:3100
+data_sources:
+  prometheus: yes
+  loki: yes
 dashboards:
   node_exporter: yes
   postgres_exporter: yes
@@ -31,18 +34,30 @@ dashboards:
 #Prometheus configs
 prometheus_version: "v2.33.5"
 prometheus_external_port: 9090
-prometheus_exporter_monitoring_group: "paynet_monitoring"
+prometheus_exporter_monitoring_group: "qurilish_monitoring"
 prometheus_exporters:
   - jobname: node
     exporter:
-      - targets: "node-exporter:9100" # ne-paynet.udevs.io:80
-      - targets: "test.ne-paynet.udevs.io:80"
-      - targets: "ne-paynet.udevs.io:80"
+      # - targets: "10.100.1.250:9100"
+      # - targets: "10.100.1.249:9100"
+      # - targets: "10.100.1.248:9100"
+      # - targets: "10.100.1.247:9100"
+      # - targets: "10.100.1.246:9100"
+      # - targets: "10.100.1.245:9100"
+      - targets: "ne.gitlab.ccnis.uz:9100"
+      - targets: "ne.vault.ccnis.uz:9100"
+      - targets: "test.ne.app.ccnis.uz:9100"
+      - targets: "test.ne.db.ccnis.uz:9100"
+      - targets: "ne.mon.ccnis.uz:9100"
+      - targets: "ne.nginx.ccnis.uz:9100"
   - jobname: postgres
     exporter:
-      - targets: "postgres-exporter:9187" # pe-paynet.udevs.io:80
-      - targets: "test.pe-paynet.udevs.io:80"
-      - targets: "pe-paynet.udevs.io:80"
+      # - targets: "10.100.1.247:9187"
+      - targets: "test.pe.db.ccnis.uz:9187"
+  - jobname: cadvisor
+    exporter:
+      # - targets: "10.100.1.248:8091"
+      - targets: "test.cadvisor.app.ccnis.uz:8091"
 
 #Loki configs
 loki_version: "1.4.1"
@@ -67,8 +82,8 @@ postgres_exporter_port: "{{ postgres_port }}"
 #Alertmanager configs
 alertmanager_version: "latest"
 alertmanager_external_port: 9093
-bot_token: sdfsdfsdfsdf
-chat_id: 45135
+bot_token: dfgdfg
+chat_id: -625057509
 receiver_name: "alertmanager-receiver"
 
 #Cadvisor configs

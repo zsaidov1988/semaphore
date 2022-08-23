@@ -1,0 +1,37 @@
+---
+project:
+  name-prod: paynet-prod
+  name-test: paynet-test
+  services:
+    admin-api-gateway:
+      options:
+        - services
+        - minio
+    agent-api-gateway:
+      options:
+        - services
+        - minio
+    auth-service:
+      options:
+        - postgres
+    corporate-service:
+      options:
+        - postgres
+    installment-service:
+      options:
+        - postgres
+    myid-service:
+      options:
+        - postgres
+        - redis
+    report-service:
+      options:
+    retailer-service:
+      options:
+        - postgres
+    settings-service:
+      options:
+        - postgres
+    sms-service:
+      options:
+        - postgres

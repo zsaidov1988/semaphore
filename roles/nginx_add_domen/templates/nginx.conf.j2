@@ -1,5 +1,5 @@
 upstream {{ item.upstream }} {
-        server 127.0.0.1:{{ item.port }} max_fails=0 fail_timeout=0;
+        server {{ item.host }}:{{ item.port }} max_fails=0 fail_timeout=0;
 }
 
 server {

@@ -18,6 +18,7 @@
       - git
       - net-tools
       - htop
+      - stress
     state: latest
     update_cache: true
 
@@ -27,3 +28,4 @@
     state: latest
   with_items:
     - jsondiff
+    - docker-py

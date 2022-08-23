@@ -18,7 +18,7 @@
       - acl
     state: latest
 
-- name: Set up Postgres 14 repo
+- name: Set up Postgres 13 repo
   shell: |
     echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
@@ -27,7 +27,7 @@
 
 - name: Install postgresql
   apt:
-    name: postgresql-14
+    name: postgresql-13
     update_cache: yes
   notify:
     - Enable Postgresql
@@ -44,7 +44,7 @@
 
 - name: Ensure PostgreSQL is listening on *
   lineinfile:
-    dest: /etc/postgresql/14/main/postgresql.conf
+    dest: /etc/postgresql/13/main/postgresql.conf
     regexp: '^#{0,1}listen_addresses\s*='
     line: "listen_addresses = '*'"
     state: present
@@ -52,7 +52,7 @@
 
 - name: Set postgresql port to {{ postgres_port }}
   lineinfile:
-    dest: /etc/postgresql/14/main/postgresql.conf
+    dest: /etc/postgresql/13/main/postgresql.conf
     regexp: "^port"
     line: "port = {{ postgres_port }}"
     state: present
@@ -60,7 +60,7 @@
 
 - name: Set log_timezone to {{ postgres_timezone }}
   lineinfile:
-    dest: /etc/postgresql/14/main/postgresql.conf
+    dest: /etc/postgresql/13/main/postgresql.conf
     regexp: "^log_timezone"
     line: "log_timezone = {{ postgres_timezone }}"
     state: present
@@ -68,7 +68,7 @@
 
 - name: Set timezone to {{ postgres_timezone }}
   lineinfile:
-    dest: /etc/postgresql/14/main/postgresql.conf
+    dest: /etc/postgresql/13/main/postgresql.conf
     regexp: "^timezone"
     line: "timezone = {{ postgres_timezone }}"
     state: present
@@ -76,13 +76,13 @@
 
 - name: Delete configuration "pg_hba.conf"
   file:
-    path: /etc/postgresql/14/main/pg_hba.conf
+    path: /etc/postgresql/13/main/pg_hba.conf
     state: absent
 
 - name: Copy configuration "pg_hba.conf"
   copy:
     src: files/pg_hba.conf
-    dest: /etc/postgresql/14/main/pg_hba.conf
+    dest: /etc/postgresql/13/main/pg_hba.conf
     owner: postgres
     group: postgres
     mode: "0640"

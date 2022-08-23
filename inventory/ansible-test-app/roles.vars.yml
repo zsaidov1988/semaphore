@@ -12,7 +12,7 @@ toggler:
   postgresql: no
   postgresql_change_password: no
   postgresql_add_db_and_user: no
-  monitoring: no
+  monitoring: yes
   grafana_config: no
 
 roles:

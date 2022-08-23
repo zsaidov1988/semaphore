@@ -1,0 +1,23 @@
+---
+- name: Make dir {{ item.dest }}
+  file:
+    path: "{{ item.dest }}"
+    state: "{{ item.state }}"
+    mode: "0755"
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - state: directory
+      dest: /var/www/{{ stack_name }}_devops
+    - state: directory
+      dest: /var/www/{{ stack_name }}_devops/vault_agent
+    - state: directory
+      dest: /var/www/{{ stack_name }}_devops/vault_agent/credentials
+    - state: directory
+      dest: /var/www/{{ stack_name }}_devops/vault_agent/config
+    - state: directory
+      dest: /var/www/{{ stack_name }}_devops/vault_agent/templates
+    - state: touch
+      dest: /var/www/{{ stack_name }}_devops/vault_agent/credentials/role_id
+    - state: touch
+      dest: /var/www/{{ stack_name }}_devops/vault_agent/credentials/secret_id

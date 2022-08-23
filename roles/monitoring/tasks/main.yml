@@ -1,4 +1,8 @@
 ---
+- name: Check Swarm init
+  include_role:
+    name: docker_swarm_init_check
+
 - name: Get stack name
   include_tasks: get-stack-name.yml
   when: get_stack_name_from_server
