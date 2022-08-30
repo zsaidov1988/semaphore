@@ -1,11 +1,14 @@
-STACK=pb
-prod-service-up:
+STACK={{ stack_name }}
+service-up:
 	set -a &&. ./.env && set +a && docker stack deploy --with-registry-auth -c services/docker-compose.yml ${STACK}
 
-prod-vault-up:
-	set -a &&. ./.env && set +a && docker stack deploy --with-registry-auth -c services/docker-compose.vault.yml ${STACK}
+vault-up:
+	set -a &&. ./.env && set +a && docker stack deploy --with-registry-auth -c vault/vault.yml ${STACK}
 
-prod-minio-up:
+vault-agent-up:
+	set -a &&. ./.env && set +a && docker stack deploy --with-registry-auth -c vault/vault-agent.yml ${STACK}
+
+minio-up:
 	set -a &&. ./.env && set +a && docker stack deploy --with-registry-auth -c minio/minio.yml ${STACK}
   
 mon-up:

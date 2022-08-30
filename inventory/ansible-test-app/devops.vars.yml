@@ -1,0 +1,31 @@
+---
+is_need_vault_agent: yes
+is_need_minio: yes
+is_need_vault: yes
+is_need_services: yes
+
+update_makefile: yes
+update_gitlab_ci_file: yes
+
+gitlab_url: gitlab.udevs.io
+gitlab_runner_image: gitlab.udevs.io:5050/docker/docker:dind
+devops_repo: "git@{{ gitlab_url }}:{{ gitlab_group }}/{{ stack_name }}_devops.git"
+
+vault_url: vault.ccnis.uz
+vault_project_name: qurilish
+vault_credentials:
+  role_id: hfghf
+  secret_id: fsdfsd
+vault_agent:
+  image: hashicorp/vault-enterprise:latest
+  external_port: 18200
+vault:
+  version:
+  external_port: 8200
+  postgres_connection: postgres://vault:VsLojdKfredG@10.100.1.6:5432/vault?sslmode=disable
+
+minio:
+  access_key: ACCESS_KEY
+  secret_key: SECRET_KEY
+  version: RELEASE.2020-05-29T14-08-49Z
+  external_port: 9000

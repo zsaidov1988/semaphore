@@ -1,0 +1,8 @@
+---
+certbot_certificate_presence: yes
+nginx_domains:
+  - domain: merchant.paynet.udevs.io
+    port: 8083
+    upstream: merchant.paynet.udevs.io
+    client_max_body_size: 100M
+    host: 127.0.0.1

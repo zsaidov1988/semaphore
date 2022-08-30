@@ -1,0 +1,42 @@
+---
+- name: Copy var files
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - src: ../../inventory/host_vars/{{ hostname }}/services.vars.yml
+      dest: /tmp/services.vars.yml
+    - src: scripts/compose.py
+      dest: /tmp/compose.py
+- name: Script
+  shell: cd /tmp && python3 compose.py
+- name: Replace "'" to "" in compose file
+  replace:
+    path: /tmp/result.yml
+    regexp: "{{ item.reg }}"
+    replace: "{{ item.rep }}"
+  with_items:
+    - reg: "'"
+      rep: ""
+- name: Make dir {{ item.dest }}
+  file:
+    path: "{{ item.dest }}"
+    state: "{{ item.state }}"
+    mode: "0755"
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - state: directory
+      dest: /var/www/{{ stack_name }}_devops/services
+- name: Template | docker-compose for services
+  template:
+    src: templates/docker-compose.yml.j2
+    dest: /var/www/{{ stack_name }}_devops/services/docker-compose.yml
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+    mode: 0644
+- name: Concatinate files
+  shell: cat /tmp/result.yml >> /var/www/{{ stack_name }}_devops/services/docker-compose.yml

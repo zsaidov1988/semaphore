@@ -1,0 +1,16 @@
+---
+project:
+  name-prod: {{ vault_project_name }}-prod
+  name-test: {{ vault_project_name }}-test
+  services:
+{%- for service, value in services.items() %}
+
+    {{ service | replace("_","-") }}:
+      options:
+      {%- if value.vault_options is defined %}
+        {%- for option in value.vault_options %}
+
+        - {{ option }}
+        {%- endfor -%}
+      {%- endif -%}
+{%- endfor -%}

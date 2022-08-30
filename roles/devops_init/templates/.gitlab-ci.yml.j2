@@ -1,0 +1,40 @@
+# before_script:
+#   - docker login {{ '$' }}CI_REGISTRY --username {{ '$' }}CI_REGISTRY_USER --password {{ '$' }}CI_REGISTRY_PASSWORD
+
+stages:
+  - lint
+  - update
+
+lint_yaml:
+  stage: lint
+  image:
+    name: cytopia/yamllint
+    entrypoint: ["/bin/ash", "-c"]
+  script:
+    - yamllint -f colored ./scripts/services.yml
+
+update_env_test:
+  image: {{ gitlab_runner_image }}
+  stage: update
+  before_script:
+    - eval {{ '$' }}(ssh-agent -s)
+    - echo "{{ '$' }}GITLAB_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - ssh -p {{ '$' }}{{ stack_name | upper }}_TEST_SSH_PORT -o StrictHostKeyChecking=no {{ '$' }}{{ stack_name | upper }}_TEST_USER@{{ '$' }}{{ stack_name | upper }}_TEST_HOST 'bash -s' < ./scripts/deploy.sh staging
+  only:
+    - staging
+
+update_env_prod:
+  image: {{ gitlab_runner_image }}
+  stage: update
+  before_script:
+    - eval {{ '$' }}(ssh-agent -s)
+    - echo "{{ '$' }}GITLAB_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - ssh -p {{ '$' }}{{ stack_name | upper }}_PROD_SSH_PORT -o StrictHostKeyChecking=no {{ '$' }}{{ stack_name | upper }}_PROD_USER@{{ '$' }}{{ stack_name | upper }}_PROD_HOST 'bash -s' < ./scripts/deploy.sh master
+  only:
+    - master

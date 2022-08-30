@@ -1,0 +1,33 @@
+---
+- name: Make dir {{ item.dest }}
+  file:
+    path: "{{ item.dest }}"
+    state: "{{ item.state }}"
+    mode: "0755"
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - state: directory
+      dest: /var/www/{{ stack_name }}_devops
+    - state: touch
+      dest: /var/www/{{ stack_name }}_devops/.env
+    - state: touch
+      dest: /var/www/{{ stack_name }}_devops/.gitignore
+- name: Gitignore .env
+  shell: echo .env >> /var/www/{{ stack_name }}_devops/.gitignore
+- name: Makefile Template
+  template:
+    src: templates/Makefile.j2
+    dest: /var/www/{{ stack_name }}_devops/Makefile
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  when: update_makefile
+- name: Gitlab CI Template
+  template:
+    src: templates/.gitlab-ci.yml.j2
+    dest: /var/www/{{ stack_name }}_devops/.gitlab-ci.yml
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  when: update_gitlab_ci_file

@@ -1,0 +1,31 @@
+---
+- name: Make dir / Touch file {{ item.dest }}
+  file:
+    path: "{{ item.dest }}"
+    state: "{{ item.state }}"
+    mode: "0755"
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - state: directory
+      dest: /var/www/{{ stack_name }}_devops/vault
+    - state: directory
+      dest: /var/www/{{ stack_name }}_devops/vault/vault
+    - state: directory
+      dest: /var/www/{{ stack_name }}_devops/vault/vault/config
+    - state: directory
+      dest: /var/www/{{ stack_name }}_devops/vault/vault/data
+    - state: directory
+      dest: /var/www/{{ stack_name }}_devops/vault/vault/policies
+- name: VAULT | Send template files
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+  with_items:
+    - src: templates/vault.yml.j2
+      dest: /var/www/{{ stack_name }}_devops/vault/vault.yml
+    - src: templates/vault.hcl.j2
+      dest: /var/www/{{ stack_name }}_devops/vault/vault/config/vault.hcl

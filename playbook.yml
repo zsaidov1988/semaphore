@@ -11,14 +11,13 @@
     - "./inventory/host_vars/{{ hostname }}/postgres.vars.yml"
     - "./inventory/host_vars/{{ hostname }}/monitoring.vars.yml"
     - "./inventory/host_vars/{{ hostname }}/certbot.vars.yml"
-    - "./vars.yml"
+    - "./inventory/host_vars/{{ hostname }}/nginx.vars.yml"
+    - "./inventory/host_vars/{{ hostname }}/services.vars.yml"
+    - "./inventory/host_vars/{{ hostname }}/devops.vars.yml"
   tasks:
     # - name: Print all available facts
     #   ansible.builtin.debug:
     #     var: ansible_facts.hostname
-    # - name: swarm
-    #   include_role:
-    #     name: docker_swarm_init_check
     - name: "Include role | {{ roles.user.name }}"
       include_role:
         name: "{{ roles.user.name }}"
@@ -89,18 +88,8 @@
         name: "{{ roles.grafana_config.name }}"
       tags: "{{ roles.grafana_config.tags }}"
       when: roles.grafana_config.include
-
-  # - user
-  # - ssh-pem
-  # - ssh
-  # - common
-  # - zsh
-  # - docker
-  # - nginx
-  # - nginx-add-domen
-  # - certbot
-  # - postgresql
-  # - postgresql-change-password
-  # - postgresql-add-db-and-user
-  # - monitoring
-  # - grafana-config
+    - name: "Include role | {{ roles.devops_init.name }}"
+      include_role:
+        name: "{{ roles.devops_init.name }}"
+      tags: "{{ roles.devops_init.tags }}"
+      when: roles.devops_init.include

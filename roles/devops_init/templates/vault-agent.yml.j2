@@ -1,29 +1,33 @@
-version: "3.7"
+version: "{{ compose_version }}"
 
+{% if logging == "loki" %}
 x-logging:
   &loki
   logging:
     driver: loki
     options:
-      loki-url: ${LOKI_PATH}
+      loki-url: {{ loki_path }}
       loki-batch-size: "400"
       loki-retries: "5"
       max-size: "100m"
       max-file: "1"
+{% endif %}
 
 
 services:
   vault-agent:
+{% if logging == "loki" %}
     <<: *loki
-    image: hashicorp/vault-enterprise:latest
+{% endif %}
+    image: {{ vault_agent.image }}
     restart: always
     ports:
-      - "18200:8200"
+      - "{{ vault_agent.external_port }}:8200"
     volumes:
       - ../vault-agent:/vault-agent:rw
       - secrets:/secrets:rw
     environment:
-      VAULT_ADDR: "https://vault.udevs.io"
+      VAULT_ADDR: "https://{{ vault_url }}"
     entrypoint: "vault agent -log-level=info -config=/vault-agent/config/vault-agent.hcl"
 
 volumes:

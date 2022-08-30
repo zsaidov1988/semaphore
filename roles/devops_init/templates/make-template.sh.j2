@@ -1,3 +1,4 @@
+{%- raw -%}
 #!/bin/bash
 services=$(yq '.project.services | keys' ./scripts/services.yml | sed 's/- //g')
 
@@ -41,7 +42,9 @@ listener \"tcp\" {
 }
 
 vault {
-  address = \"https://vault.udevs.io\"
+{%- endraw %}
+  address = \"https://{{ vault_url }}\"
+{%- raw -%}
 }" > ./vault-agent/config/vault-agent.hcl
 
 for service in ${services[@]}
@@ -72,3 +75,4 @@ echo "template {
 }" >> ./vault-agent/config/vault-agent.hcl
 
 done
+{%- endraw %}

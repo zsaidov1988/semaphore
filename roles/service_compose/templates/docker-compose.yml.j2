@@ -1,0 +1,15 @@
+version: "{{ compose_version }}"
+
+{% if logging == "loki" %}
+x-logging:
+  &loki
+  logging:
+    driver: loki
+    options:
+      loki-url: {{ loki_path }}
+      loki-batch-size: "400"
+      loki-retries: "5"
+      max-size: "100m"
+      max-file: "1"
+{% endif %}
+

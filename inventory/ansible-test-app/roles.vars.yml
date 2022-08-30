@@ -12,8 +12,9 @@ toggler:
   postgresql: no
   postgresql_change_password: no
   postgresql_add_db_and_user: no
-  monitoring: yes
+  monitoring: no
   grafana_config: no
+  devops_init: no
 
 roles:
   user:
@@ -100,3 +101,9 @@ roles:
     tags:
       - grafana_config
       - configure_grafana_config
+  devops_init:
+    name: devops_init
+    include: "{{ toggler.devops_init }}"
+    tags:
+      - devops_init
+      - configure_devops_init

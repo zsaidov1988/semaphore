@@ -1,23 +1,25 @@
 ---
-- name: Make dir {{ item.dest }}
-  file:
-    path: "{{ item.dest }}"
-    state: "{{ item.state }}"
-    mode: "0755"
-    owner: "{{ user_name }}"
-    group: "{{ user_primary_group }}"
-  with_items:
-    - state: directory
-      dest: /var/www/{{ stack_name }}_devops
-    - state: directory
-      dest: /var/www/{{ stack_name }}_devops/vault_agent
-    - state: directory
-      dest: /var/www/{{ stack_name }}_devops/vault_agent/credentials
-    - state: directory
-      dest: /var/www/{{ stack_name }}_devops/vault_agent/config
-    - state: directory
-      dest: /var/www/{{ stack_name }}_devops/vault_agent/templates
-    - state: touch
-      dest: /var/www/{{ stack_name }}_devops/vault_agent/credentials/role_id
-    - state: touch
-      dest: /var/www/{{ stack_name }}_devops/vault_agent/credentials/secret_id
+- name: ROLE - Get stack name from server
+  include_role:
+    name: get_stack_name
+  when: get_stack_name_from_server
+
+- name: TASK - Create common devops files
+  include_tasks: common-files.yml
+
+- name: TASK - VAULT AGENT
+  include_tasks: vault-agent.yml
+  when: is_need_vault_agent
+
+- name: TASK - VAULT
+  include_tasks: vault.yml
+  when: is_need_vault
+
+- name: ROLE - Docker compose for services
+  include_role:
+    name: service_compose
+  when: is_need_services
+
+- name: TASK - Minio
+  include_tasks: minio.yml
+  when: is_need_minio

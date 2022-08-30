@@ -6,7 +6,11 @@ route:
   receiver: "{{ receiver_name }}"
   routes:
     - match:
-        instance: "node-exporter:9101"
+        instance: "node-exporter:9100"
+      receiver: "{{ receiver_name }}"
+      continue: true
+    - match:
+        instance: "10.100.1.3:9100"
       receiver: "{{ receiver_name }}"
       continue: true
 receivers:

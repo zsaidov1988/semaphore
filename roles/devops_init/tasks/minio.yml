@@ -1,0 +1,15 @@
+---
+- name: Make dir / Touch file {{ item.dest }}
+  file:
+    path: /var/www/{{ stack_name }}_devops/minio
+    state: directory
+    mode: "0755"
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"
+- name: MINIO | Send template files
+  template:
+    src: templates/minio.yml.j2
+    dest: /var/www/{{ stack_name }}_devops/minio/minio.yml
+    mode: 0644
+    owner: "{{ user_name }}"
+    group: "{{ user_primary_group }}"

@@ -1,9 +1,11 @@
+---
+postgres_version: 14
 postgres_password_set: true
 postgres_password_change: false
 postgres_password_old: ""
-postgres_password_new: gdhdgh
+postgres_password_new: admin
 postgres_timezone: Asia/Tashkent
-postgres_port: 5432
+postgres_port: 30032
 
 # Variables for adding new users and databases
 databases:

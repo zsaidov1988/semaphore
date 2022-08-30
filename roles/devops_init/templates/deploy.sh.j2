@@ -1,11 +1,11 @@
-echo "Change directory to /var/www/pb_devops"
-cd /var/www/pb_devops
+echo "Change directory to /var/www/{{ stack_name }}_devops"
+cd /var/www/{{ stack_name }}_devops
 echo "============================================"
 
 echo "Stash git changes"
 git stash
 echo "==========================================="
-
+{% raw %}
 echo "Pull origin ${1}"
 git pull origin ${1}
 echo "==========================================="
@@ -18,12 +18,13 @@ echo "Execute make-template script"
 bash ./scripts/make-template.sh ${1}
 echo "============================================"
 
-# echo "Update vault"
-# make prod-vault-up
-# echo "==========================================="
+echo "Update vault"
+make vault-up
+echo "==========================================="
 
-# echo "Update services"
-# make prod-service-up
-# echo "==========================================="
+echo "Update services"
+make service-up
+echo "==========================================="
 
 echo "Success!"
+{% endraw %}

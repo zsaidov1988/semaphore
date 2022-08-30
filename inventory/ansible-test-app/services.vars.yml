@@ -1,0 +1,67 @@
+---
+compose_version: "3.7"
+registry: gitlab.udevs.io:5050
+gitlab_group: paynet
+get_stack_name_from_server: no
+stack_name: pb
+image_tag: test
+logging: loki
+
+services:
+  agent_api_gateway:
+    loki: yes
+    vault_options:
+      - postgres
+      - minio
+    generate_image: yes
+    generate_vault_env: yes
+    compose:
+      environment:
+        - KEY=value
+        - KEY=value
+        - KEY=value
+      nimadir: Nimaladir
+      ports:
+        - 8080:80
+        - 8081:8080
+      deploy:
+        server:
+          replica: 10
+          names:
+            - name1
+            - name2
+        node: Server
+      ports_again:
+        - 8080:80
+  paynet_service:
+    loki: yes
+    generate_image: yes
+    generate_vault_env: yes
+    compose:
+      volumes:
+        - secrets:/secrets:ro
+      ports:
+        - 8092:8080
+        - 8092:8080
+        - 8092:8080
+      porrrts:
+        - 8092:8080
+        - 8092:8080
+        - 8092:8080
+  pdddt_service:
+    loki: yes
+    vault_options:
+      - minio
+    generate_image: yes
+    generate_vault_env: yes
+    compose:
+      volumes:
+        - secrets:/secrets:ro
+      environment:
+        - KEY=value
+      ports:
+        - 8092:8080
+        - 8092:8080
+        - 8092:8080
+volumes:
+  secrets:
