@@ -4,35 +4,37 @@
   gather_facts: yes
   become: yes
   tasks:
-    - name: Debug password
-      debug:
-        var: "{{ is_user_sudoer }}"
+    - name: Shell
+      shell: echo $USER
+    # - name: Debug password
+    #   debug:
+    #     var: "{{ is_user_sudoer }}"
 
-    - name: Debug
-      debug:
-        var: "{{ user_primary_group }}"
+    # - name: Debug
+    #   debug:
+    #     var: "{{ user_primary_group }}"
 
-    - name: "Add {{ user_primary_group }} group"
-      group:
-        name: "{{ user_primary_group }}"
-        state: present
+    # - name: "Add {{ user_primary_group }} group"
+    #   group:
+    #     name: "{{ user_primary_group }}"
+    #     state: present
 
-    - name: "Add {{ user_name }} user"
-      user:
-        name: "{{ user_name }}"
-        group: "{{ user_primary_group }}"
-        create_home: yes
-        password: "{{ user_password | password_hash('sha512') }}"
+    # - name: "Add {{ user_name }} user"
+    #   user:
+    #     name: "{{ user_name }}"
+    #     group: "{{ user_primary_group }}"
+    #     create_home: yes
+    #     password: "{{ user_password | password_hash('sha512') }}"
 
-    - name: "Add {{ user_name }} user to sudo group"
-      user:
-        name: "{{ user_name }}"
-        groups: sudo
-        append: yes
-      when: is_user_sudoer == true
+    # - name: "Add {{ user_name }} user to sudo group"
+    #   user:
+    #     name: "{{ user_name }}"
+    #     groups: sudo
+    #     append: yes
+    #   when: is_user_sudoer == true
 
-    - name: Modify sudoers file
-      lineinfile:
-        path: /etc/sudoers
-        line: "{{user_name}}   ALL=(ALL:ALL) ALL"
-      when: is_user_sudoer == true
+    # - name: Modify sudoers file
+    #   lineinfile:
+    #     path: /etc/sudoers
+    #     line: "{{user_name}}   ALL=(ALL:ALL) ALL"
+    #   when: is_user_sudoer == true
