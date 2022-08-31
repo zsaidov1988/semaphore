@@ -14,11 +14,14 @@
     # - name: Debug
     #   debug:
     #     var: "{{ user_primary_group }}"
+    - name: debug pass
+      debug:
+        var: ansible_sudo_pass
 
-    - name: "Add {{ user_primary_group }} group"
-      group:
-        name: "{{ user_primary_group }}"
-        state: present
+    # - name: "Add {{ user_primary_group }} group"
+    #   group:
+    #     name: "{{ user_primary_group }}"
+    #     state: present
 
     # - name: "Add {{ user_name }} user"
     #   user:
