@@ -1,0 +1,8 @@
+---
+- name: Configure new server
+  hosts: local
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: BIrnima
+      shell: echo $USER
