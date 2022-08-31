@@ -14,9 +14,9 @@
     # - name: Debug
     #   debug:
     #     var: "{{ user_primary_group }}"
-    - name: debug become
-      debug:
-        var: "{{ become }}"
+    # - name: debug become
+    #   debug:
+    #     var: "{{ become }}"
     - name: debug username
       debug:
         var: "{{ user_name }}"
