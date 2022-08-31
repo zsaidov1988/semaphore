@@ -1,6 +1,6 @@
 ---
 - name: Configure new server
-  hosts: local
+  hosts: qurilish
   gather_facts: yes
   become: yes
   tasks:
