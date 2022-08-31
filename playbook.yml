@@ -11,9 +11,9 @@
     - "./inventory/host_vars/{{ hostname }}/postgres.vars.yml"
     - "./inventory/host_vars/{{ hostname }}/monitoring.vars.yml"
     - "./inventory/host_vars/{{ hostname }}/certbot.vars.yml"
-    - "./inventory/host_vars/{{ hostname }}/nginx.vars.yml"
-    - "./inventory/host_vars/{{ hostname }}/services.vars.yml"
-    - "./inventory/host_vars/{{ hostname }}/devops.vars.yml"
+    # - "./inventory/host_vars/{{ hostname }}/nginx.vars.yml"
+    # - "./inventory/host_vars/{{ hostname }}/services.vars.yml"
+    # - "./inventory/host_vars/{{ hostname }}/devops.vars.yml"
   tasks:
     # - name: Print all available facts
     #   ansible.builtin.debug:
@@ -88,8 +88,8 @@
         name: "{{ roles.grafana_config.name }}"
       tags: "{{ roles.grafana_config.tags }}"
       when: roles.grafana_config.include
-    - name: "Include role | {{ roles.devops_init.name }}"
-      include_role:
-        name: "{{ roles.devops_init.name }}"
-      tags: "{{ roles.devops_init.tags }}"
-      when: roles.devops_init.include
+    # - name: "Include role | {{ roles.devops_init.name }}"
+    #   include_role:
+    #     name: "{{ roles.devops_init.name }}"
+    #   tags: "{{ roles.devops_init.tags }}"
+    #   when: roles.devops_init.include
