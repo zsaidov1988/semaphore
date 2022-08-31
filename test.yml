@@ -3,6 +3,7 @@
   hosts: server
   gather_facts: yes
   become: yes
+  become_user: root
   tasks:
     - name: Shell
       shell: echo $USER
@@ -14,10 +15,10 @@
     #   debug:
     #     var: "{{ user_primary_group }}"
 
-    # - name: "Add {{ user_primary_group }} group"
-    #   group:
-    #     name: "{{ user_primary_group }}"
-    #     state: present
+    - name: "Add {{ user_primary_group }} group"
+      group:
+        name: "{{ user_primary_group }}"
+        state: present
 
     # - name: "Add {{ user_name }} user"
     #   user:
